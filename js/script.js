@@ -34,6 +34,15 @@ const createCell = (content) => {
     
 }
 
+const getUniqueRandomNumber = (min, max, list) => {
+    max++;
+    let randomNumber;
+    do{
+        randomNumber = Math.floor(Math.random() * (max - min)) + min;
+    }  while (list.includes (randomNumber)); 
+    
+    return randomNumber;
+}
 
 // PRENDO ELEMENTI DOM 
 const grid = document.getElementById('grid');
@@ -45,16 +54,28 @@ const button = document.getElementById('btn');
 
 const selectValue = select.value;
 
-
-// IMPOSTAZIONI GRIGLIA
+/---- IMPOSTAZIONI --------/
+// GRIGLIA
 let rows = 10;
 let cels = 10;
 
-// IMPOSTAZIONI CONTATORE PUNTEGGIO
+// CONTATORE PUNTEGGIO
 let scoreCounter; 
 let i = 1;
 const listCellClicked = [];
 console.log(listCellClicked)
+
+// CREO BOMBE
+const arsenalBombs = [];
+// creo 16 bombe 
+for(let i = 1; i <= 16 + 1; i++) {
+    // genero 16 numeri diversi
+    const bombs = getUniqueRandomNumber(1, 100, arsenalBombs);
+    // aggiungo il numero nella lista delle bombe
+    arsenalBombs.push(bombs)
+    console.log('bomba   ' + bombs);
+}
+
 
 
 if (selectValue == '2'){
