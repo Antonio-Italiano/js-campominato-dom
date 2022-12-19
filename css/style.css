@@ -17,10 +17,13 @@ main {
     align-items: center;
 }
 
-.clicked{
+#grid .clicked{
     background-color: lightblue;
 }
 
-.boomb {
+#grid .boomb {
+    background-image: url(../img/bomba.png);
     background-color: red;
+    background-position: center;
+    background-size: cover;
 }

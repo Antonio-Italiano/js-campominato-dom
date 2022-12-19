@@ -38,7 +38,7 @@ const createCell = (content) => {
             console.log(content);
             // inserisco il punteggio in pagina
             // alert('hai perso')
-            const myTimeout = setTimeout(myGreeting, 500);
+            const myTimeout = setTimeout(myGreeting, 1000);
             function myGreeting(){
                 grid.innerHTML = `<h1 class="text-center text-danger">Game over <br>${listCellClicked.length} punti  </h1>`
                 // azzero il punteggio                            
@@ -125,7 +125,6 @@ button.addEventListener('click', () => {
         // Aggiungo cell come figlio di grid 
         grid.appendChild(cell);
     }
-    // CREO BOMBE
     
     // creo 16 bombe 
     for(let i = 1; i <= 16 ; i++) {
