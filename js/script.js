@@ -4,7 +4,10 @@ caselle per ognuna delle 10 righe. Quando l'utente clicca su ogni cella,
 la cella cliccata si colora di azzurro ed emetto un messaggio in console 
 con il numero della cella cliccata.*/ 
 
+
+
 /-------------------- FUNZIONI ------------------/
+
 // FUNZIONE PER CREARE LA CELLA
 const createCell = (content) => {
     // Creo la cella 
@@ -14,26 +17,41 @@ const createCell = (content) => {
 
     // Aggiungo l'event listner
     cell.addEventListener('click', () => {        
+        
         // Aggiungo la classe quando è active 
-        
-        
+        if (!arsenalBombs.includes(content)) {
+
             cell.classList.add('clicked');
             console.log(content);
             // aggiungo alla array i numeri solo se non sono gia usciti
             if (!listCellClicked.includes(content)) {                
                 listCellClicked.push(content);        
                 // aumento il contatore di 1 ogni volta che l'utente schiaccia la casella corretta
-                scoreCounter = (i++); 
-                console.log(scoreCounter);
             }
-        
+            // in caso di vittoria
+            if (listCellClicked.length == 84) {
+                grid.innerHTML = `<h1 class="text-center text-success">Congratulazioni Hai vinto</h1>`
+            }
+        } else {
 
+            cell.classList.add('boomb');
+            console.log(content);
+            // inserisco il punteggio in pagina
+            // alert('hai perso')
+            const myTimeout = setTimeout(myGreeting, 500);
+            function myGreeting(){
+                grid.innerHTML = `<h1 class="text-center text-danger">Game over <br>${listCellClicked.length} punti  </h1>`
+                // azzero il punteggio                            
+                listCellClicked.length = 0 ;
+            }
+        }
     })
     
     return cell;
     
 }
 
+// FUNZIONE PER GENERARE UN NUMERO CASUALE
 const getUniqueRandomNumber = (min, max, list) => {
     max++;
     let randomNumber;
@@ -44,39 +62,36 @@ const getUniqueRandomNumber = (min, max, list) => {
     return randomNumber;
 }
 
+
+
+/--------------- OPERAZIONI PRELIMINARI ------------/
+
 // PRENDO ELEMENTI DOM 
 const grid = document.getElementById('grid');
 const select = document.getElementById('select');
 const button = document.getElementById('btn');
-// console.log(grid)
+const notice = document.getElementById('notice');
+// console.log(notice);
 
-/--------------- OPERAZIONI PRELIMINARI ------------/
 
-const selectValue = select.value;
 
 /---- IMPOSTAZIONI --------/
+
 // GRIGLIA
 let rows = 10;
 let cels = 10;
 
 // CONTATORE PUNTEGGIO
-let scoreCounter; 
-let i = 1;
+// let i = 1;
 const listCellClicked = [];
 console.log(listCellClicked)
 
+grid.innerHTML = `<h1 class="text-center">Schiaccia play per giocare</h1>`
+
 // CREO BOMBE
-const arsenalBombs = [];
-// creo 16 bombe 
-for(let i = 1; i <= 16 + 1; i++) {
-    // genero 16 numeri diversi
-    const bombs = getUniqueRandomNumber(1, 100, arsenalBombs);
-    // aggiungo il numero nella lista delle bombe
-    arsenalBombs.push(bombs)
-    console.log('bomba   ' + bombs);
-}
+let arsenalBombs = [];
 
-
+const selectValue = select.value;
 
 if (selectValue == '2'){
 rows = 9;
@@ -87,14 +102,18 @@ rows = 9;
 }
 const totalCels = rows * cels;
 
-console.log(totalCels , selectValue);
+// console.log(totalCels , selectValue);
+
 
 
 /-------------------- EVENTI -----------------------/
+
 // EVENT LISTNER SUL BOTTONE
 button.addEventListener('click', () => {  
     
     grid.innerHTML = '';
+    arsenalBombs.length = 0;
+
     
     
     // STAMPO LE CELLE IN PAG 
@@ -106,6 +125,16 @@ button.addEventListener('click', () => {
         // Aggiungo cell come figlio di grid 
         grid.appendChild(cell);
     }
+    // CREO BOMBE
+    
+    // creo 16 bombe 
+    for(let i = 1; i <= 16 ; i++) {
+    // genero 16 numeri diversi
+    const bombs = getUniqueRandomNumber(1, 100, arsenalBombs);
+    // aggiungo il numero nella lista delle bombe
+    arsenalBombs.push(bombs)
+    console.log('bomba   ' + bombs);
+    }    
 })
 
 
