@@ -11,14 +11,23 @@ const createCell = (content) => {
     const cell = document.createElement('div');
     cell.append(content);
     cell.classList.add('col');
-    // Aggiungo l'event listner
-    cell.addEventListener('click', () => {
-        
-        // Aggiungo la classe quando è active 
-        cell.classList.add('clicked');
-        console.log(content);
 
+    // Aggiungo l'event listner
+    cell.addEventListener('click', () => {        
+        // Aggiungo la classe quando è active 
         
+        
+            cell.classList.add('clicked');
+            console.log(content);
+            // aggiungo alla array i numeri solo se non sono gia usciti
+            if (!listCellClicked.includes(content)) {                
+                listCellClicked.push(content);        
+                // aumento il contatore di 1 ogni volta che l'utente schiaccia la casella corretta
+                scoreCounter = (i++); 
+                console.log(scoreCounter);
+            }
+        
+
     })
     
     return cell;
@@ -41,7 +50,11 @@ const selectValue = select.value;
 let rows = 10;
 let cels = 10;
 
-
+// IMPOSTAZIONI CONTATORE PUNTEGGIO
+let scoreCounter; 
+let i = 1;
+const listCellClicked = [];
+console.log(listCellClicked)
 
 
 if (selectValue == '2'){
