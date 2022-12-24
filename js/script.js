@@ -14,18 +14,21 @@ const createCell = (content) => {
     const cell = document.createElement('div');
     cell.append(content);
     cell.classList.add('col');
-
+    
     // Aggiungo l'event listner
-    cell.addEventListener('click', () => {        
+    cell.addEventListener('click', () => {  
         
+        
+                
         // Aggiungo la classe quando è active 
         if (!arsenalBombs.includes(content)) {
-
+            
             cell.classList.add('clicked');
             console.log(content);
             // aggiungo alla array i numeri solo se non sono gia usciti
             if (!listCellClicked.includes(content)) {                
-                listCellClicked.push(content);        
+                listCellClicked.push(content);
+
                 // aumento il contatore di 1 ogni volta che l'utente schiaccia la casella corretta
             }
             // in caso di vittoria
@@ -33,7 +36,7 @@ const createCell = (content) => {
                 grid.innerHTML = `<h1 class="text-center text-success">Congratulazioni Hai vinto</h1>`
             }
         } else {
-
+            
             cell.classList.add('boomb');
             console.log(content);
             // inserisco il punteggio in pagina
@@ -41,6 +44,7 @@ const createCell = (content) => {
             const myTimeout = setTimeout(myGreeting, 1000);
             function myGreeting(){
                 grid.innerHTML = `<h1 class="text-center text-danger">Game over <br>${listCellClicked.length} punti  </h1>`
+                
                 // azzero il punteggio                            
                 listCellClicked.length = 0 ;
             }
@@ -68,41 +72,24 @@ const getUniqueRandomNumber = (min, max, list) => {
 
 // PRENDO ELEMENTI DOM 
 const grid = document.getElementById('grid');
-const select = document.getElementById('select');
 const button = document.getElementById('btn');
 const notice = document.getElementById('notice');
-// console.log(notice);
 
 
 
 /---- IMPOSTAZIONI --------/
 
-// GRIGLIA
-let rows = 10;
-let cels = 10;
 
 // CONTATORE PUNTEGGIO
 // let i = 1;
 const listCellClicked = [];
-console.log(listCellClicked)
+// console.log(listCellClicked);
 
 grid.innerHTML = `<h1 class="text-center">Schiaccia play per giocare</h1>`
 
 // CREO BOMBE
 let arsenalBombs = [];
 
-const selectValue = select.value;
-
-if (selectValue == '2'){
-rows = 9;
-    cels = 9;
-} else if (selectValue == '3'){
-    rows = 7;
-    cels = 7;
-}
-const totalCels = rows * cels;
-
-// console.log(totalCels , selectValue);
 
 
 
@@ -113,7 +100,11 @@ button.addEventListener('click', () => {
     
     grid.innerHTML = '';
     arsenalBombs.length = 0;
-
+    
+    let rows = 10;
+    let cols = 10;    
+    const totalCels = rows * cols;
+    console.log(totalCels);
     
     
     // STAMPO LE CELLE IN PAG 
@@ -121,7 +112,7 @@ button.addEventListener('click', () => {
         
         // Creo la cella invocando la funzione createCell
         const cell = createCell(i);
-
+        
         // Aggiungo cell come figlio di grid 
         grid.appendChild(cell);
     }
@@ -132,7 +123,7 @@ button.addEventListener('click', () => {
     const bombs = getUniqueRandomNumber(1, 100, arsenalBombs);
     // aggiungo il numero nella lista delle bombe
     arsenalBombs.push(bombs)
-    console.log('bomba   ' + bombs);
+    // console.log('bomba   ' + bombs);
     }    
 })
 
